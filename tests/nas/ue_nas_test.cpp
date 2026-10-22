@@ -316,6 +316,19 @@ TEST_F(UeNasTest, RegistrationAcceptCompletesRegistration) {
   EXPECT_TRUE(std::holds_alternative<RegistrationComplete>(*last_ul()));
 }
 
+// Regression for Verdict VD-MM-020 (DEFECT_LOG #5).
+TEST_F(UeNasTest, RegistrationAcceptWithMalformedOptionalIeStillCompletes) {
+  start_registration();
+  authenticate();
+  secure();
+  Bytes plain = encode(accept());
+  for (std::uint8_t b : from_hex("16022121")) plain.push_back(b);  // T3502 value IE with length 2
+  nas_->on_dl_nas(protect(peer_.ctx, plain, SecurityHeaderType::IntegrityProtectedAndCiphered, sec::Direction::Downlink));
+  EXPECT_EQ(nas_->state(), MmState::Registered);
+  EXPECT_TRUE(std::holds_alternative<RegistrationComplete>(*last_ul()));
+  EXPECT_EQ(nas_->counters().status_sent, 0u);
+}
+
 TEST_F(UeNasTest, PlainRegistrationAcceptIsDiscarded) {
   start_registration();
   nas_->on_dl_nas(encode(accept()));

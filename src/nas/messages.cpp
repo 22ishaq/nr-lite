@@ -19,6 +19,8 @@ class Reader {
  public:
   Reader(const Bytes& b, std::size_t pos) : b_(b), pos_(pos) {}
   bool empty() const { return pos_ >= b_.size(); }
+  std::size_t pos() const { return pos_; }
+  void seek(std::size_t pos) { pos_ = pos; }
   std::size_t remaining() const { return b_.size() - pos_; }
   std::uint8_t peek() const {
     if (empty()) missing("unexpected end of message");
@@ -70,16 +72,24 @@ void put_tlve(Bytes& out, std::uint8_t iei, const Bytes& v) {
 
 /// Iterates the optional IE part of a message. `handler(iei, reader)` returns true if it consumed
 /// the IE; otherwise the IE is skipped according to its format. Repeated IEs after the first are
-/// ignored (TS 24.007 §8.6.3).
+/// ignored (TS 24.007 §8.6.3), and an optional IE whose contents are syntactically incorrect is
+/// treated as not present (TS 24.501 §7.7.2). A truncated message is still an error.
 template <typename Handler>
 void for_each_optional(Reader& r, Handler&& handler) {
   std::set<std::uint8_t> seen;
   while (!r.empty()) {
+    const std::size_t start = r.pos();
     const std::uint8_t first = r.peek();
     const bool half_octet = (first & 0x80) != 0;
     const std::uint8_t key = half_octet ? static_cast<std::uint8_t>(first & 0xF0) : first;
     const bool repeat = !seen.insert(key).second;
-    if (!repeat && handler(key, r)) continue;
+    if (!repeat) {
+      try {
+        if (handler(key, r)) continue;
+      } catch (const NasDecodeError&) {
+        r.seek(start);  // ignore the IE: fall through and skip it by its length
+      }
+    }
     // Skip: type 1/2 IEs are one octet; 0x7X IEIs are TLV-E; everything else TLV (TS 24.007 §11.2.4).
     r.u8("IEI");
     if (half_octet) continue;

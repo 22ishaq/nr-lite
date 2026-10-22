@@ -227,16 +227,34 @@ TEST(NasDecode, TruncatedOptionalIeRejected) {
   EXPECT_FALSE(decode_plain(enc));
 }
 
-TEST(NasDecode, WrongFixedLengthRejected) {
+// TS 24.501 §7.7.2: syntactically incorrect optional IEs are treated as not present.
+TEST(NasDecode, MalformedOptionalIeIsTreatedAsNotPresent) {
   // AUTHENTICATION RESPONSE with a 15-octet RES*
   auto r = decode_plain(from_hex("7e00572d0f" "000000000000000000000000000000"));
-  ASSERT_FALSE(r);
-  EXPECT_EQ(r.error().code, static_cast<int>(Cause::InvalidMandatoryInformation));
+  ASSERT_TRUE(r) << r.error().message;
+  EXPECT_FALSE(std::get<AuthenticationResponse>(*r).res_star);
 }
 
-TEST(NasDecode, RegistrationAcceptGutiIeMustCarryGuti) {
+// Regression for Verdict VD-MM-020 (DEFECT_LOG #5): a T3502 IE of length 2 used to reject the
+// whole REGISTRATION ACCEPT with cause #96.
+TEST(NasDecode, RegistrationAcceptWithBadT3502KeepsOtherIes) {
+  RegistrationAccept acc;
+  acc.guti = sample_guti();
+  acc.t3512 = GprsTimer{1, 1};
+  Bytes enc = encode(acc);
+  for (std::uint8_t b : from_hex("16022121")) enc.push_back(b);
+  auto r = decode_plain(enc);
+  ASSERT_TRUE(r) << r.error().message;
+  const auto& dec = std::get<RegistrationAccept>(*r);
+  EXPECT_EQ(dec.guti, acc.guti);
+  EXPECT_EQ(dec.t3512, acc.t3512);
+  EXPECT_FALSE(dec.t3502);
+}
+
+TEST(NasDecode, RegistrationAcceptGutiIeWithoutGutiIsIgnored) {
   auto r = decode_plain(from_hex("7e00420101" "77000d0100f110000000000000000010"));
-  EXPECT_FALSE(r);
+  ASSERT_TRUE(r);
+  EXPECT_FALSE(std::get<RegistrationAccept>(*r).guti);
 }
 
 TEST(NasDecode, EveryTruncationOfEveryMessageIsHandled) {
