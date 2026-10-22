@@ -102,7 +102,7 @@ coverage with every simplification is in [docs/SPEC_COVERAGE.md](docs/SPEC_COVER
 * **Published test vectors**: FIPS-197 AES, FIPS 180-4 SHA-256, RFC 4231 HMAC, RFC 4493 AES-CMAC,
   TS 33.401 Annex C 128-EIA2/EEA2 (same algorithms as NIA2/NEA2), and TS 35.207 MILENAGE test
   sets 1–3.
-* **436 GoogleTest cases** (386 `TEST`/`TEST_F` plus parameterized suites). They cover the UPER
+* **445 GoogleTest cases** (395 `TEST`/`TEST_F` plus parameterized suites). They cover the UPER
   primitives, every message round trip, truncation and random-input robustness, the UE RRC, gNB
   RRC, UE 5GMM and AMF state machines against scripted peers, and end-to-end fault-injection
   scenarios (lost RRCSetup, lost Registration Complete, corrupted SMC, reordering, admission
@@ -111,7 +111,9 @@ coverage with every simplification is in [docs/SPEC_COVERAGE.md](docs/SPEC_COVER
   with `-Werror`.
 
 Defects found by tests during development are recorded in
-[docs/DEFECT_LOG.md](docs/DEFECT_LOG.md).
+[docs/DEFECT_LOG.md](docs/DEFECT_LOG.md): one found by these unit tests, and four found by
+[Verdict](https://github.com/22ishaq/verdict), the conformance harness that drives NR-Lite from Python.
+Each fix has its own commit and regression test.
 
 ## Scope and simplifications
 
