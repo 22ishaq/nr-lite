@@ -1,0 +1,25 @@
+  time(ms)  link   dir  message                                        bytes
+         2  Uu     UE->gNB  rrcSetupRequest                            6
+         4  Uu     gNB->UE  rrcSetup                                   8
+         6  Uu     UE->gNB  rrcSetupComplete [RegistrationRequest]     41
+         7  N2     gNB->AMF InitialUEMessage [RegistrationRequest]     30
+         8  N2     AMF->gNB DownlinkNASTransport [AuthenticationRequest] 42
+        10  Uu     gNB->UE  dlInformationTransfer [AuthenticationRequest] 51
+        12  Uu     UE->gNB  ulInformationTransfer [AuthenticationResponse] 30
+        13  N2     gNB->AMF UplinkNASTransport [AuthenticationResponse] 21
+        14  N2     AMF->gNB DownlinkNASTransport [SecurityModeCommand*] 15
+        16  Uu     gNB->UE  dlInformationTransfer [SecurityModeCommand*] 24
+        18  Uu     UE->gNB  ulInformationTransfer [SecurityModeComplete*] 19
+        19  N2     gNB->AMF UplinkNASTransport [SecurityModeComplete*] 10
+        20  N2     AMF->gNB InitialContextSetupRequest [RegistrationAccept*] 42
+        22  Uu     gNB->UE  securityModeCommand                        9
+        24  Uu     UE->gNB  securityModeComplete                       8
+        26  Uu     gNB->UE  dlInformationTransfer [RegistrationAccept*] 51
+        28  Uu     UE->gNB  ulInformationTransfer [RegistrationComplete*] 19
+        29  N2     gNB->AMF UplinkNASTransport [RegistrationComplete*] 10
+       132  Uu     gNB->UE  rrcRelease                                 8
+
+UE     RRC                  5GMM                                 5G-TMSI        AMF view
+UE1    RRC_IDLE             5GMM-REGISTERED.NORMAL-SERVICE       0xaaf708ba     5GMM-REGISTERED
+
+wrote 19 frames to docs/sample_traces/registration.pcap

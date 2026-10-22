@@ -1,0 +1,1111 @@
+Frame 1: Packet, 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.002000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.002000000 UTC
+    Epoch Arrival Time: 1767225600.002000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time since reference or first frame: 0.000000000 seconds]
+    Frame Number: 1
+    Frame Length: 46 bytes (368 bits)
+    Capture Length: 46 bytes (368 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.ccch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-CCCH-Message
+        message: c1 (0)
+            c1: rrcSetupRequest (0)
+                rrcSetupRequest
+                    rrcSetupRequest
+                        ue-Identity: randomValue (1)
+                            randomValue: bf76d0ded0 [bit length 39, 1 LSB pad bits, 1011 1111  0111 0110  1101 0000  1101 1110  1101 000. decimal value 411166076776]
+                        establishmentCause: mo-Signalling (3)
+                        spare: 00 [bit length 1, 7 LSB pad bits, 0... .... decimal value 0]
+
+Frame 2: Packet, 48 bytes on wire (384 bits), 48 bytes captured (384 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.004000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.004000000 UTC
+    Epoch Arrival Time: 1767225600.004000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 2.000000 milliseconds]
+    Frame Number: 2
+    Frame Length: 48 bytes (384 bits)
+    Capture Length: 48 bytes (384 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.ccch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-CCCH-Message
+        message: c1 (0)
+            c1: rrcSetup (1)
+                rrcSetup
+                    rrc-TransactionIdentifier: 0
+                    criticalExtensions: rrcSetup (0)
+                        rrcSetup
+                            radioBearerConfig
+                                srb-ToAddModList: 1 item
+                                    Item 0
+                                        SRB-ToAddMod
+                                            srb-Identity: 1
+                            masterCellGroup: 40008000
+                                CellGroupConfig
+                                    cellGroupId: 0
+                                    rlc-BearerToAddModList: 1 item
+                                        Item 0
+                                            RLC-BearerConfig
+                                                logicalChannelIdentity: 1
+                                                servedRadioBearer: srb-Identity (0)
+                                                    srb-Identity: 1
+
+Frame 3: Packet, 75 bytes on wire (600 bits), 75 bytes captured (600 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.006000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.006000000 UTC
+    Epoch Arrival Time: 1767225600.006000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 4.000000 milliseconds]
+    Frame Number: 3
+    Frame Length: 75 bytes (600 bits)
+    Capture Length: 75 bytes (600 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-DCCH-Message
+        message: c1 (0)
+            c1: rrcSetupComplete (2)
+                rrcSetupComplete
+                    rrc-TransactionIdentifier: 0
+                    criticalExtensions: rrcSetupComplete (0)
+                        rrcSetupComplete
+                            selectedPLMN-Identity: 1
+                            s-NSSAI-List: 1 item
+                                Item 0
+                                    S-NSSAI: sst (0)
+                                        sst: 01 [bit length 8, 0000 0001 decimal value 1]
+                            dedicatedNAS-Message: 7e004171000d0100f1100000000000000000101001002e02a0202f020101
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Registration request (0x41)
+                                        5GS registration type
+                                            .... 0... = Follow-On Request bit (FOR): No follow-on request pending
+                                            .... .001 = 5GS registration type: initial registration (1)
+                                        NAS key set identifier
+                                            0... .... = Type of security context flag (TSC): Native security context (for KSIAMF)
+                                            .111 .... = NAS key set identifier: 7
+                                        5GS mobile identity
+                                            Length: 13
+                                            0... .... = Spare: 0
+                                            .000 .... = SUPI format: IMSI (0)
+                                            .... 0... = Spare: 0
+                                            .... .001 = Type of identity: SUCI (1)
+                                            Mobile Country Code (MCC): Test network (001)
+                                            Mobile Network Code (MNC): Test network (01)
+                                            Routing indicator: 0000
+                                            .... 0000 = Protection scheme Id: NULL scheme (0)
+                                            Home network public key identifier: 0
+                                            MSIN: 0000000001
+                                        5GMM capability
+                                            Element ID: 0x10
+                                            Length: 1
+                                            0... .... = Service gap control (SGC): Not supported
+                                            .0.. .... = IP header compression for control plane CIoT 5GS optimization (5G-IPHC-CP CIoT): Not supported
+                                            ..0. .... = N3 data transfer (N3 data): Not supported
+                                            ...0 .... = Control plane CIoT 5GS optimization (5G-CP CIoT): Not supported
+                                            .... 0... = Restriction on use of enhanced coverage support (RestrictEC): Not supported
+                                            .... .0.. = LTE Positioning Protocol (LPP) capability: Not supported
+                                            .... ..0. = ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message for handover support (HO attach): Not supported
+                                            .... ...0 = EPC NAS supported (S1 mode): Not supported
+                                        UE security capability
+                                            Element ID: 0x2e
+                                            Length: 2
+                                            1... .... = 5G-EA0: Supported
+                                            .0.. .... = 128-5G-EA1: Not supported
+                                            ..1. .... = 128-5G-EA2: Supported
+                                            ...0 .... = 128-5G-EA3: Not supported
+                                            .... 0... = 5G-EA4: Not supported
+                                            .... .0.. = 5G-EA5: Not supported
+                                            .... ..0. = 5G-EA6: Not supported
+                                            .... ...0 = 5G-EA7: Not supported
+                                            0... .... = 5G-IA0: Not supported
+                                            .0.. .... = 128-5G-IA1: Not supported
+                                            ..1. .... = 128-5G-IA2: Supported
+                                            ...0 .... = 128-5G-IA3: Not supported
+                                            .... 0... = 5G-IA4: Not supported
+                                            .... .0.. = 5G-IA5: Not supported
+                                            .... ..0. = 5G-IA6: Not supported
+                                            .... ...0 = 5G-IA7: Not supported
+                                        NSSAI - Requested NSSAI
+                                            Element ID: 0x2f
+                                            Length: 2
+                                            S-NSSAI 1
+                                                Length: 1
+                                                Slice/service type (SST): eMBB (1)
+
+Frame 4: Packet, 62 bytes on wire (496 bits), 62 bytes captured (496 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.007000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.007000000 UTC
+    Epoch Arrival Time: 1767225600.007000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 5.000000 milliseconds]
+    Frame Number: 4
+    Frame Length: 62 bytes (496 bits)
+    Capture Length: 62 bytes (496 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.2
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Registration request (0x41)
+        5GS registration type
+            .... 0... = Follow-On Request bit (FOR): No follow-on request pending
+            .... .001 = 5GS registration type: initial registration (1)
+        NAS key set identifier
+            0... .... = Type of security context flag (TSC): Native security context (for KSIAMF)
+            .111 .... = NAS key set identifier: 7
+        5GS mobile identity
+            Length: 13
+            0... .... = Spare: 0
+            .000 .... = SUPI format: IMSI (0)
+            .... 0... = Spare: 0
+            .... .001 = Type of identity: SUCI (1)
+            Mobile Country Code (MCC): Test network (001)
+            Mobile Network Code (MNC): Test network (01)
+            Routing indicator: 0000
+            .... 0000 = Protection scheme Id: NULL scheme (0)
+            Home network public key identifier: 0
+            MSIN: 0000000001
+        5GMM capability
+            Element ID: 0x10
+            Length: 1
+            0... .... = Service gap control (SGC): Not supported
+            .0.. .... = IP header compression for control plane CIoT 5GS optimization (5G-IPHC-CP CIoT): Not supported
+            ..0. .... = N3 data transfer (N3 data): Not supported
+            ...0 .... = Control plane CIoT 5GS optimization (5G-CP CIoT): Not supported
+            .... 0... = Restriction on use of enhanced coverage support (RestrictEC): Not supported
+            .... .0.. = LTE Positioning Protocol (LPP) capability: Not supported
+            .... ..0. = ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message for handover support (HO attach): Not supported
+            .... ...0 = EPC NAS supported (S1 mode): Not supported
+        UE security capability
+            Element ID: 0x2e
+            Length: 2
+            1... .... = 5G-EA0: Supported
+            .0.. .... = 128-5G-EA1: Not supported
+            ..1. .... = 128-5G-EA2: Supported
+            ...0 .... = 128-5G-EA3: Not supported
+            .... 0... = 5G-EA4: Not supported
+            .... .0.. = 5G-EA5: Not supported
+            .... ..0. = 5G-EA6: Not supported
+            .... ...0 = 5G-EA7: Not supported
+            0... .... = 5G-IA0: Not supported
+            .0.. .... = 128-5G-IA1: Not supported
+            ..1. .... = 128-5G-IA2: Supported
+            ...0 .... = 128-5G-IA3: Not supported
+            .... 0... = 5G-IA4: Not supported
+            .... .0.. = 5G-IA5: Not supported
+            .... ..0. = 5G-IA6: Not supported
+            .... ...0 = 5G-IA7: Not supported
+        NSSAI - Requested NSSAI
+            Element ID: 0x2f
+            Length: 2
+            S-NSSAI 1
+                Length: 1
+                Slice/service type (SST): eMBB (1)
+
+Frame 5: Packet, 74 bytes on wire (592 bits), 74 bytes captured (592 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.008000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.008000000 UTC
+    Epoch Arrival Time: 1767225600.008000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 6.000000 milliseconds]
+    Frame Number: 5
+    Frame Length: 74 bytes (592 bits)
+    Capture Length: 74 bytes (592 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.2
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Authentication request (0x56)
+        0000 .... = Spare Half Octet: 0
+        NAS key set identifier - ngKSI
+            .... 0... = Type of security context flag (TSC): Native security context (for KSIAMF)
+            .... .000 = NAS key set identifier: 0
+        ABBA
+            Length: 2
+            ABBA Contents: 0000
+        Authentication Parameter RAND - 5G authentication challenge
+            Element ID: 0x21
+            RAND value: 4e9a8e3849b4090010001b6563dc99c1
+        Authentication Parameter AUTN (UMTS and EPS authentication challenge) - 5G authentication challenge
+            Element ID: 0x20
+            Length: 16
+            AUTN value: 523a07e20feb800059f035880cc04fa2
+                SQN xor AK: 523a07e20feb
+                AMF: 8000
+                MAC: 59f035880cc04fa2
+
+Frame 6: Packet, 85 bytes on wire (680 bits), 85 bytes captured (680 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.010000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.010000000 UTC
+    Epoch Arrival Time: 1767225600.010000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 8.000000 milliseconds]
+    Frame Number: 6
+    Frame Length: 85 bytes (680 bits)
+    Capture Length: 85 bytes (680 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-DCCH-Message
+        message: c1 (0)
+            c1: dlInformationTransfer (5)
+                dlInformationTransfer
+                    rrc-TransactionIdentifier: 1
+                    criticalExtensions: dlInformationTransfer (0)
+                        dlInformationTransfer
+                            dedicatedNAS-Message: 7e005600020000214e9a8e3849b4090010001b6563dc99c12010523a07e20feb800059f035880cc04fa2
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Authentication request (0x56)
+                                        0000 .... = Spare Half Octet: 0
+                                        NAS key set identifier - ngKSI
+                                            .... 0... = Type of security context flag (TSC): Native security context (for KSIAMF)
+                                            .... .000 = NAS key set identifier: 0
+                                        ABBA
+                                            Length: 2
+                                            ABBA Contents: 0000
+                                        Authentication Parameter RAND - 5G authentication challenge
+                                            Element ID: 0x21
+                                            RAND value: 4e9a8e3849b4090010001b6563dc99c1
+                                        Authentication Parameter AUTN (UMTS and EPS authentication challenge) - 5G authentication challenge
+                                            Element ID: 0x20
+                                            Length: 16
+                                            AUTN value: 523a07e20feb800059f035880cc04fa2
+                                                SQN xor AK: 523a07e20feb
+                                                AMF: 8000
+                                                MAC: 59f035880cc04fa2
+
+Frame 7: Packet, 64 bytes on wire (512 bits), 64 bytes captured (512 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.012000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.012000000 UTC
+    Epoch Arrival Time: 1767225600.012000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 10.000000 milliseconds]
+    Frame Number: 7
+    Frame Length: 64 bytes (512 bits)
+    Capture Length: 64 bytes (512 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-DCCH-Message
+        message: c1 (0)
+            c1: ulInformationTransfer (7)
+                ulInformationTransfer
+                    criticalExtensions: ulInformationTransfer (0)
+                        ulInformationTransfer
+                            dedicatedNAS-Message: 7e00572d1076c8b8e06238dbc537d95914bdd61c0f
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Authentication response (0x57)
+                                        Authentication response parameter
+                                            Element ID: 0x2d
+                                            Length: 16
+                                            RES: 76c8b8e06238dbc537d95914bdd61c0f
+
+Frame 8: Packet, 53 bytes on wire (424 bits), 53 bytes captured (424 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.013000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.013000000 UTC
+    Epoch Arrival Time: 1767225600.013000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 11.000000 milliseconds]
+    Frame Number: 8
+    Frame Length: 53 bytes (424 bits)
+    Capture Length: 53 bytes (424 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.2
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Authentication response (0x57)
+        Authentication response parameter
+            Element ID: 0x2d
+            Length: 16
+            RES: 76c8b8e06238dbc537d95914bdd61c0f
+
+Frame 9: Packet, 47 bytes on wire (376 bits), 47 bytes captured (376 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.014000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.014000000 UTC
+    Epoch Arrival Time: 1767225600.014000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 12.000000 milliseconds]
+    Frame Number: 9
+    Frame Length: 47 bytes (376 bits)
+    Capture Length: 47 bytes (376 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.2
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Security protected NAS 5GS message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0011 = Security header type: Integrity protected with new 5GS security context (3)
+        Message authentication code: 0xef4d6f6d
+        Sequence number: 0
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Security mode command (0x5d)
+        NAS security algorithms
+            0000 .... = Type of ciphering algorithm: 5G-EA0 (null ciphering algorithm) (0)
+            .... 0010 = Type of integrity protection algorithm: 128-5G-IA2 (2)
+        0000 .... = Spare Half Octet: 0
+        NAS key set identifier - ngKSI
+            .... 0... = Type of security context flag (TSC): Native security context (for KSIAMF)
+            .... .000 = NAS key set identifier: 0
+        UE security capability - Replayed UE security capabilities
+            Length: 2
+            1... .... = 5G-EA0: Supported
+            .0.. .... = 128-5G-EA1: Not supported
+            ..1. .... = 128-5G-EA2: Supported
+            ...0 .... = 128-5G-EA3: Not supported
+            .... 0... = 5G-EA4: Not supported
+            .... .0.. = 5G-EA5: Not supported
+            .... ..0. = 5G-EA6: Not supported
+            .... ...0 = 5G-EA7: Not supported
+            0... .... = 5G-IA0: Not supported
+            .0.. .... = 128-5G-IA1: Not supported
+            ..1. .... = 128-5G-IA2: Supported
+            ...0 .... = 128-5G-IA3: Not supported
+            .... 0... = 5G-IA4: Not supported
+            .... .0.. = 5G-IA5: Not supported
+            .... ..0. = 5G-IA6: Not supported
+            .... ...0 = 5G-IA7: Not supported
+
+Frame 10: Packet, 58 bytes on wire (464 bits), 58 bytes captured (464 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.016000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.016000000 UTC
+    Epoch Arrival Time: 1767225600.016000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 14.000000 milliseconds]
+    Frame Number: 10
+    Frame Length: 58 bytes (464 bits)
+    Capture Length: 58 bytes (464 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-DCCH-Message
+        message: c1 (0)
+            c1: dlInformationTransfer (5)
+                dlInformationTransfer
+                    rrc-TransactionIdentifier: 2
+                    criticalExtensions: dlInformationTransfer (0)
+                        dlInformationTransfer
+                            dedicatedNAS-Message: 7e03ef4d6f6d007e005d020002a020
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Security protected NAS 5GS message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0011 = Security header type: Integrity protected with new 5GS security context (3)
+                                        Message authentication code: 0xef4d6f6d
+                                        Sequence number: 0
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Security mode command (0x5d)
+                                        NAS security algorithms
+                                            0000 .... = Type of ciphering algorithm: 5G-EA0 (null ciphering algorithm) (0)
+                                            .... 0010 = Type of integrity protection algorithm: 128-5G-IA2 (2)
+                                        0000 .... = Spare Half Octet: 0
+                                        NAS key set identifier - ngKSI
+                                            .... 0... = Type of security context flag (TSC): Native security context (for KSIAMF)
+                                            .... .000 = NAS key set identifier: 0
+                                        UE security capability - Replayed UE security capabilities
+                                            Length: 2
+                                            1... .... = 5G-EA0: Supported
+                                            .0.. .... = 128-5G-EA1: Not supported
+                                            ..1. .... = 128-5G-EA2: Supported
+                                            ...0 .... = 128-5G-EA3: Not supported
+                                            .... 0... = 5G-EA4: Not supported
+                                            .... .0.. = 5G-EA5: Not supported
+                                            .... ..0. = 5G-EA6: Not supported
+                                            .... ...0 = 5G-EA7: Not supported
+                                            0... .... = 5G-IA0: Not supported
+                                            .0.. .... = 128-5G-IA1: Not supported
+                                            ..1. .... = 128-5G-IA2: Supported
+                                            ...0 .... = 128-5G-IA3: Not supported
+                                            .... 0... = 5G-IA4: Not supported
+                                            .... .0.. = 5G-IA5: Not supported
+                                            .... ..0. = 5G-IA6: Not supported
+                                            .... ...0 = 5G-IA7: Not supported
+
+Frame 11: Packet, 53 bytes on wire (424 bits), 53 bytes captured (424 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.018000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.018000000 UTC
+    Epoch Arrival Time: 1767225600.018000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 16.000000 milliseconds]
+    Frame Number: 11
+    Frame Length: 53 bytes (424 bits)
+    Capture Length: 53 bytes (424 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-DCCH-Message
+        message: c1 (0)
+            c1: ulInformationTransfer (7)
+                ulInformationTransfer
+                    criticalExtensions: ulInformationTransfer (0)
+                        ulInformationTransfer
+                            dedicatedNAS-Message: 7e04718a57f4007e005e
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Security protected NAS 5GS message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0100 = Security header type: Integrity protected and ciphered with new 5GS security context (4)
+                                        Message authentication code: 0x718a57f4
+                                        Sequence number: 0
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Security mode complete (0x5e)
+
+Frame 12: Packet, 42 bytes on wire (336 bits), 42 bytes captured (336 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.019000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.019000000 UTC
+    Epoch Arrival Time: 1767225600.019000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 17.000000 milliseconds]
+    Frame Number: 12
+    Frame Length: 42 bytes (336 bits)
+    Capture Length: 42 bytes (336 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.2
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Security protected NAS 5GS message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0100 = Security header type: Integrity protected and ciphered with new 5GS security context (4)
+        Message authentication code: 0x718a57f4
+        Sequence number: 0
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Security mode complete (0x5e)
+
+Frame 13: Packet, 74 bytes on wire (592 bits), 74 bytes captured (592 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.020000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.020000000 UTC
+    Epoch Arrival Time: 1767225600.020000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 18.000000 milliseconds]
+    Frame Number: 13
+    Frame Length: 74 bytes (592 bits)
+    Capture Length: 74 bytes (592 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.2
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Security protected NAS 5GS message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0010 = Security header type: Integrity protected and ciphered (2)
+        Message authentication code: 0x44216af8
+        Sequence number: 1
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Registration accept (0x42)
+        5GS registration result
+            Length: 1
+            .0.. .... = Disaster roaming registration result: No additional information
+            ..0. .... = Emergency registered: Not registered for emergency services
+            ...0 .... = NSSAA Performed: Network slice-specific authentication and authorization is not to be performed
+            .... 0... = SMS over NAS: Not Allowed
+            .... .001 = 5GS registration result: 3GPP access (1)
+        5GS mobile identity - 5G-GUTI
+            Element ID: 0x77
+            Length: 11
+            1... .... = Spare: 1
+            .1.. .... = Spare: 1
+            ..1. .... = Spare: 1
+            ...1 .... = Spare: 1
+            .... 0... = Spare: 0
+            .... .010 = Type of identity: 5G-GUTI (2)
+            Mobile Country Code (MCC): Test network (001)
+            Mobile Network Code (MNC): Test network (01)
+            AMF Region ID: 1
+            0000 0000 01.. .... = AMF Set ID: 1
+            ..00 0001 = AMF Pointer: 1
+            5G-TMSI: 2868316346 (0xaaf708ba)
+        5GS tracking area identity list
+            Element ID: 0x54
+            Length: 7
+            Partial tracking area list  1
+                .00. .... = Type of list: list of TACs belonging to one PLMN or SNPN, with non-consecutive TAC values (0)
+                ...0 0000 = Number of elements: 1 element (0)
+                Mobile Country Code (MCC): Test network (001)
+                Mobile Network Code (MNC): Test network (01)
+                TAC: 1
+        NSSAI - Allowed NSSAI
+            Element ID: 0x15
+            Length: 2
+            S-NSSAI 1
+                Length: 1
+                Slice/service type (SST): eMBB (1)
+        GPRS Timer 3 - T3512 value
+            Element ID: 0x5e
+            Length: 1
+            GPRS Timer: 1 hour
+                001. .... = Unit: value is incremented in multiples of 1 hour (1)
+                ...0 0001 = Timer value: 1
+
+Frame 14: Packet, 43 bytes on wire (344 bits), 43 bytes captured (344 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.022000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.022000000 UTC
+    Epoch Arrival Time: 1767225600.022000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 20.000000 milliseconds]
+    Frame Number: 14
+    Frame Length: 43 bytes (344 bits)
+    Capture Length: 43 bytes (344 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-DCCH-Message
+        message: c1 (0)
+            c1: securityModeCommand (4)
+                securityModeCommand
+                    rrc-TransactionIdentifier: 3
+                    criticalExtensions: securityModeCommand (0)
+                        securityModeCommand
+                            securityConfigSMC
+                                securityAlgorithmConfig
+                                    cipheringAlgorithm: nea0 (0)
+                                    integrityProtAlgorithm: nia2 (2)
+
+Frame 15: Packet, 42 bytes on wire (336 bits), 42 bytes captured (336 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.024000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.024000000 UTC
+    Epoch Arrival Time: 1767225600.024000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 22.000000 milliseconds]
+    Frame Number: 15
+    Frame Length: 42 bytes (336 bits)
+    Capture Length: 42 bytes (336 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-DCCH-Message
+        message: c1 (0)
+            c1: securityModeComplete (5)
+                securityModeComplete
+                    rrc-TransactionIdentifier: 3
+                    criticalExtensions: securityModeComplete (0)
+                        securityModeComplete
+
+Frame 16: Packet, 85 bytes on wire (680 bits), 85 bytes captured (680 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.026000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.026000000 UTC
+    Epoch Arrival Time: 1767225600.026000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 24.000000 milliseconds]
+    Frame Number: 16
+    Frame Length: 85 bytes (680 bits)
+    Capture Length: 85 bytes (680 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-DCCH-Message
+        message: c1 (0)
+            c1: dlInformationTransfer (5)
+                dlInformationTransfer
+                    rrc-TransactionIdentifier: 0
+                    criticalExtensions: dlInformationTransfer (0)
+                        dlInformationTransfer
+                            dedicatedNAS-Message: 7e0244216af8017e0042010177000bf200f110010041aaf708ba54070000f110000001150201015e0121
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Security protected NAS 5GS message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0010 = Security header type: Integrity protected and ciphered (2)
+                                        Message authentication code: 0x44216af8
+                                        Sequence number: 1
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Registration accept (0x42)
+                                        5GS registration result
+                                            Length: 1
+                                            .0.. .... = Disaster roaming registration result: No additional information
+                                            ..0. .... = Emergency registered: Not registered for emergency services
+                                            ...0 .... = NSSAA Performed: Network slice-specific authentication and authorization is not to be performed
+                                            .... 0... = SMS over NAS: Not Allowed
+                                            .... .001 = 5GS registration result: 3GPP access (1)
+                                        5GS mobile identity - 5G-GUTI
+                                            Element ID: 0x77
+                                            Length: 11
+                                            1... .... = Spare: 1
+                                            .1.. .... = Spare: 1
+                                            ..1. .... = Spare: 1
+                                            ...1 .... = Spare: 1
+                                            .... 0... = Spare: 0
+                                            .... .010 = Type of identity: 5G-GUTI (2)
+                                            Mobile Country Code (MCC): Test network (001)
+                                            Mobile Network Code (MNC): Test network (01)
+                                            AMF Region ID: 1
+                                            0000 0000 01.. .... = AMF Set ID: 1
+                                            ..00 0001 = AMF Pointer: 1
+                                            5G-TMSI: 2868316346 (0xaaf708ba)
+                                        5GS tracking area identity list
+                                            Element ID: 0x54
+                                            Length: 7
+                                            Partial tracking area list  1
+                                                .00. .... = Type of list: list of TACs belonging to one PLMN or SNPN, with non-consecutive TAC values (0)
+                                                ...0 0000 = Number of elements: 1 element (0)
+                                                Mobile Country Code (MCC): Test network (001)
+                                                Mobile Network Code (MNC): Test network (01)
+                                                TAC: 1
+                                        NSSAI - Allowed NSSAI
+                                            Element ID: 0x15
+                                            Length: 2
+                                            S-NSSAI 1
+                                                Length: 1
+                                                Slice/service type (SST): eMBB (1)
+                                        GPRS Timer 3 - T3512 value
+                                            Element ID: 0x5e
+                                            Length: 1
+                                            GPRS Timer: 1 hour
+                                                001. .... = Unit: value is incremented in multiples of 1 hour (1)
+                                                ...0 0001 = Timer value: 1
+
+Frame 17: Packet, 53 bytes on wire (424 bits), 53 bytes captured (424 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.028000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.028000000 UTC
+    Epoch Arrival Time: 1767225600.028000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 2.000000 milliseconds]
+    [Time delta from previous displayed frame: 2.000000 milliseconds]
+    [Time since reference or first frame: 26.000000 milliseconds]
+    Frame Number: 17
+    Frame Length: 53 bytes (424 bits)
+    Capture Length: 53 bytes (424 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.ul.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.45.70.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    UL-DCCH-Message
+        message: c1 (0)
+            c1: ulInformationTransfer (7)
+                ulInformationTransfer
+                    criticalExtensions: ulInformationTransfer (0)
+                        ulInformationTransfer
+                            dedicatedNAS-Message: 7e025cb8a546017e0043
+                                Non-Access-Stratum 5GS (NAS)PDU
+                                    Security protected NAS 5GS message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0010 = Security header type: Integrity protected and ciphered (2)
+                                        Message authentication code: 0x5cb8a546
+                                        Sequence number: 1
+                                    Plain NAS 5GS Message
+                                        Extended protocol discriminator: 5G mobility management messages (126)
+                                        0000 .... = Spare Half Octet: 0
+                                        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+                                        Message type: Registration complete (0x43)
+
+Frame 18: Packet, 42 bytes on wire (336 bits), 42 bytes captured (336 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.029000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.029000000 UTC
+    Epoch Arrival Time: 1767225600.029000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 1.000000 milliseconds]
+    [Time delta from previous displayed frame: 1.000000 milliseconds]
+    [Time since reference or first frame: 27.000000 milliseconds]
+    Frame Number: 18
+    Frame Length: 42 bytes (336 bits)
+    Capture Length: 42 bytes (336 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nas-5gs]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 8
+        Protocol Name: nas-5gs
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.0.0.2
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+Non-Access-Stratum 5GS (NAS)PDU
+    Security protected NAS 5GS message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0010 = Security header type: Integrity protected and ciphered (2)
+        Message authentication code: 0x5cb8a546
+        Sequence number: 1
+    Plain NAS 5GS Message
+        Extended protocol discriminator: 5G mobility management messages (126)
+        0000 .... = Spare Half Octet: 0
+        .... 0000 = Security header type: Plain NAS message, not security protected (0)
+        Message type: Registration complete (0x43)
+
+Frame 19: Packet, 42 bytes on wire (336 bits), 42 bytes captured (336 bits)
+    Encapsulation type: Wireshark Upper PDU export (155)
+    Arrival Time: Jan  1, 2026 00:00:00.132000000 GMT
+    UTC Arrival Time: Jan  1, 2026 00:00:00.132000000 UTC
+    Epoch Arrival Time: 1767225600.132000000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 103.000000 milliseconds]
+    [Time delta from previous displayed frame: 103.000000 milliseconds]
+    [Time since reference or first frame: 130.000000 milliseconds]
+    Frame Number: 19
+    Frame Length: 42 bytes (336 bits)
+    Capture Length: 42 bytes (336 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: exported_pdu:nr-rrc]
+    Character encoding: ASCII (0)
+EXPORTED_PDU
+    Tag: PDU content dissector name (12)
+        Length: 16
+        Protocol Name: nr-rrc.dl.dcch
+    Tag: IPv4 Source Address (20)
+        Length: 4
+        IPv4 Src: 10.0.0.1
+    Tag: IPv4 Destination Address (21)
+        Length: 4
+        IPv4 Dst: 10.45.70.1
+    Tag: End-of-options (0)
+        Length: 0
+    Exported PDU data
+NR Radio Resource Control (RRC) protocol
+    DL-DCCH-Message
+        message: c1 (0)
+            c1: rrcRelease (2)
+                rrcRelease
+                    rrc-TransactionIdentifier: 1
+                    criticalExtensions: rrcRelease (0)
+                        rrcRelease
+

@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "Linux / GCC", os: ubuntu-latest, cxx: g++ }
+          - { name: "Linux / Clang", os: ubuntu-latest, cxx: clang++ }
+          - { name: "macOS / AppleClang", os: macos-latest, cxx: c++ }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DNRLITE_WERROR=ON -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Unit tests
+        run: ctest --test-dir build --output-on-failure --parallel 4
+      - name: Smoke-run the simulator
+        run: ./build/nrlite-sim --scenario registration
+
+  sanitizers:
+    name: ASan + UBSan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DNRLITE_SANITIZE=ON -DNRLITE_WERROR=ON -DCMAKE_CXX_COMPILER=clang++
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Tests under sanitizers
+        run: ctest --test-dir build --output-on-failure --parallel 4
+
+  wireshark:
+    name: Wireshark cross-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tshark (Wireshark stable PPA)
+        run: |
+          sudo add-apt-repository -y ppa:wireshark-dev/stable
+          sudo apt-get update
+          echo "wireshark-common wireshark-common/install-setuid boolean false" | sudo debconf-set-selections
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tshark
+          tshark --version | head -1
+      - name: Configure and build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
+      - name: Decode generated traces with tshark
+        run: ctest --test-dir build -L wireshark --output-on-failure
+      - name: Upload traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nrlite-traces
+          path: build/tests/wireshark_*.pcap

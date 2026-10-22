@@ -1,0 +1,10 @@
+build*/
+cmake-build-*/
+.cache/
+compile_commands.json
+*.pcap
+!docs/sample_traces/*.pcap
+.DS_Store
+.vscode/
+.idea/
+*.log
