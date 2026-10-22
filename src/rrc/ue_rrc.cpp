@@ -64,6 +64,7 @@ bool UeRrc::establish(EstablishmentCause cause, Bytes nas_pdu, std::optional<std
   // §5.3.15.2 / TS 38.304: while T302 runs, access is barred except for emergency and MT access.
   if (t302_.running() && cause != EstablishmentCause::emergency && cause != EstablishmentCause::mt_Access) {
     log_.warn(tag_, "access barred: T302 running for another ", t302_.remaining(), " ms");
+    if (cb_.establishment_failed) cb_.establishment_failed(EstablishmentFailure::AccessBarred);
     return false;
   }
 

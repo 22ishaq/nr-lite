@@ -25,6 +25,10 @@ class UeNasTest : public ::testing::Test {
     nas_ = std::make_unique<UeNas>(loop_, log_, "UE1", cfg);
     nas_->set_callbacks(UeNas::Callbacks{
         [this](rrc::EstablishmentCause c, const Bytes& pdu, std::optional<std::uint64_t> s_tmsi) {
+          if (barred_) {
+            nas_->on_establishment_failure(rrc::EstablishmentFailure::AccessBarred);
+            return false;
+          }
           established_.push_back({c, pdu, s_tmsi});
           sent_.push_back(pdu);
           return establish_ok_;
@@ -98,6 +102,7 @@ class UeNasTest : public ::testing::Test {
   std::unique_ptr<UeNas> nas_;
   NetworkPeer peer_;
   bool establish_ok_ = true;
+  bool barred_ = false;  // the stub RRC reports AccessBarred, as UeRrc does while T302 runs
   std::vector<Established> established_;
   std::vector<Bytes> sent_;
   std::vector<sec::Key256> kgnb_;
@@ -432,13 +437,48 @@ TEST_F(UeNasTest, FifthFailureStartsT3502AndDeletesIdentity) {
   EXPECT_EQ(nas_->attempt_counter(), 0u);
 }
 
-TEST_F(UeNasTest, BarredEstablishmentCountsAsFailedAttempt) {
+TEST_F(UeNasTest, RefusedEstablishmentWithoutReasonCountsAsFailedAttempt) {
   establish_ok_ = false;
   nas_->power_on();
   nas_->register_ue();
   loop_.advance(1);
   EXPECT_EQ(nas_->attempt_counter(), 1u);
   EXPECT_EQ(nas_->state(), MmState::Deregistered);
+}
+
+// Regression for Verdict VD-RRC-004 (DEFECT_LOG #2): a barred access attempt is postponed, not failed.
+TEST_F(UeNasTest, BarredRegistrationIsPostponedNotCountedAsFailure) {
+  nas_->power_on();
+  barred_ = true;
+  ASSERT_TRUE(nas_->register_ue());
+  EXPECT_EQ(nas_->state(), MmState::Deregistered);
+  EXPECT_EQ(nas_->sub_state(), MmSubState::NormalService);
+  EXPECT_EQ(nas_->attempt_counter(), 0u);
+  EXPECT_FALSE(nas_->t3510().running());
+  EXPECT_TRUE(nas_->waiting_for_barring_alleviation());
+  loop_.advance(60000);
+  EXPECT_TRUE(established_.empty());
+  barred_ = false;
+  nas_->on_barring_alleviated();
+  EXPECT_EQ(nas_->state(), MmState::RegisteredInitiated);
+  ASSERT_EQ(established_.size(), 1u);
+  EXPECT_FALSE(nas_->waiting_for_barring_alleviation());
+}
+
+// Regression for Verdict VD-RRC-008 (DEFECT_LOG #2): de-registration starts when barring ends.
+TEST_F(UeNasTest, BarredDeregistrationStartsWhenBarringIsAlleviated) {
+  register_fully();
+  nas_->on_rrc_released(rrc::ReleaseCause::RrcRelease);
+  barred_ = true;
+  const std::size_t before = established_.size();
+  ASSERT_TRUE(nas_->deregister(false));
+  EXPECT_EQ(established_.size(), before);
+  barred_ = false;
+  loop_.advance(1000);
+  nas_->on_barring_alleviated();
+  ASSERT_EQ(established_.size(), before + 1);
+  EXPECT_TRUE(std::holds_alternative<DeregistrationRequestUeOriginating>(*last_ul()));
+  EXPECT_EQ(nas_->t3521().remaining(), 15000);
 }
 
 TEST_F(UeNasTest, ConnectionReleaseBeforeAcceptCountsAsFailure) {

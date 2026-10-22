@@ -82,10 +82,7 @@ UeNas::UeNas(EventLoop& loop, const Logger& log, std::string name, UeNasConfig c
                  return;
                }
                log_.info(tag_, "T3521 expired: retransmitting DEREGISTRATION REQUEST");
-               DeregistrationRequestUeOriginating d;
-               d.deregistration_type = DeregistrationType{false, false, 1};
-               d.ngksi = ctx_.valid ? ctx_.ngksi : Ngksi{};
-               d.mobile_identity = guti_ ? MobileIdentity{*guti_} : MobileIdentity{suci()};
+               const DeregistrationRequestUeOriginating d = make_deregistration_request(false);
                if (mode_ == MmMode::Connected) {
                  send_nas(d);
                } else {
@@ -148,9 +145,12 @@ void UeNas::send_initial(const PlainMessage& m) {
     return;
   }
   const std::optional<std::uint64_t> s_tmsi = guti_ ? std::optional<std::uint64_t>(guti_->s_tmsi()) : std::nullopt;
+  initial_kind_ = std::holds_alternative<DeregistrationRequestUeOriginating>(m) ? InitialKind::Deregistration
+                                                                                : InitialKind::Registration;
+  establish_reported_ = false;
   const bool ok = cb_.establish && cb_.establish(rrc::EstablishmentCause::mo_Signalling, pdu, s_tmsi);
-  if (!ok) {
-    // Access barred or RRC busy: handled like a failed establishment, asynchronously.
+  if (!ok && !establish_reported_) {
+    // Refused without a reason from RRC: handled like a failed establishment, asynchronously.
     loop_.schedule_in(0, [this] {
       if (state_ == MmState::RegisteredInitiated) handle_registration_failure("RRC connection not established");
     });
@@ -211,10 +211,7 @@ bool UeNas::deregister(bool switch_off) {
     log_.warn(tag_, "deregister() ignored in ", to_string(state_));
     return false;
   }
-  DeregistrationRequestUeOriginating d;
-  d.deregistration_type = DeregistrationType{switch_off, false, 1};
-  d.ngksi = ctx_.valid ? ctx_.ngksi : Ngksi{};
-  d.mobile_identity = guti_ ? MobileIdentity{*guti_} : MobileIdentity{suci()};
+  const DeregistrationRequestUeOriginating d = make_deregistration_request(switch_off);
   deregistration_switch_off_ = switch_off;
   deregistration_attempts_ = 0;
   t3512_.stop();
@@ -232,8 +229,18 @@ bool UeNas::deregister(bool switch_off) {
   return true;
 }
 
+DeregistrationRequestUeOriginating UeNas::make_deregistration_request(bool switch_off) const {
+  DeregistrationRequestUeOriginating d;
+  d.deregistration_type = DeregistrationType{switch_off, false, 1};
+  d.ngksi = ctx_.valid ? ctx_.ngksi : Ngksi{};
+  d.mobile_identity = guti_ ? MobileIdentity{*guti_} : MobileIdentity{suci()};
+  return d;
+}
+
 void UeNas::start_registration(std::uint8_t type) {
   registration_type_ = type;
+  state_before_registration_ = state_;
+  sub_before_registration_ = sub_state_;
   ++counters_.registration_attempts;
   RegistrationRequest rr;
   rr.registration_type = RegistrationType{false, type};
@@ -287,11 +294,44 @@ void UeNas::on_rrc_released(rrc::ReleaseCause cause) {
 }
 
 void UeNas::on_establishment_failure(rrc::EstablishmentFailure f) {
+  establish_reported_ = true;
+  if (f == rrc::EstablishmentFailure::AccessBarred) {
+    on_access_barred();
+    return;
+  }
   log_.warn(tag_, "RRC establishment failed: ", rrc::to_string(f));
   if (state_ == MmState::RegisteredInitiated) handle_registration_failure(rrc::to_string(f));
 }
 
-void UeNas::on_barring_alleviated() { log_.info(tag_, "access barring alleviated"); }
+void UeNas::on_access_barred() {
+  // §5.5.1.2.7 b) and §5.5.2.2.6: when the lower layers bar the access attempt the procedure is not
+  // started (and not counted as a failure); it is started when the barring is alleviated.
+  if (initial_kind_ == InitialKind::Registration && state_ == MmState::RegisteredInitiated) {
+    t3510_.stop();
+    set_state(state_before_registration_, sub_before_registration_);
+    pending_after_barring_ = InitialKind::Registration;
+    log_.info(tag_, "access barred: registration postponed until barring is alleviated");
+  } else if (initial_kind_ == InitialKind::Deregistration) {
+    pending_after_barring_ = InitialKind::Deregistration;
+    log_.info(tag_, "access barred: de-registration postponed until barring is alleviated");
+  }
+}
+
+void UeNas::on_barring_alleviated() {
+  log_.info(tag_, "access barring alleviated");
+  const std::optional<InitialKind> pending = pending_after_barring_;
+  pending_after_barring_.reset();
+  if (!pending) return;
+  if (*pending == InitialKind::Registration) {
+    const bool may_register = (state_ == MmState::Deregistered && sub_state_ != MmSubState::NoSupi &&
+                               sub_state_ != MmSubState::LimitedService) ||
+                              state_ == MmState::Registered;
+    if (may_register && !t3346_.running()) start_registration(registration_type_);
+  } else if (state_ == MmState::DeregisteredInitiated) {
+    send_initial(make_deregistration_request(false));
+    t3521_.start(config_.t3521_ms);
+  }
+}
 
 // ---- Downlink NAS -------------------------------------------------------------------------------
 

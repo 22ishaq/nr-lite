@@ -7,6 +7,7 @@ Verdict's own `DEFECTS.md` and cross-referenced here when the fix landed in NR-L
 | # | Found by | Symptom | Root cause | Fix |
 |---|---|---|---|---|
 | 1 | `UeNasTest.T3520ExpiryAbortsRegistration` (GoogleTest) | When an authentication failure and T3510 expiry overlapped, the UE aborted the RRC connection twice. In the worse case it aborted the *next* registration attempt | `handle_registration_failure()` stopped T3510 but left T3520 running, so the timer belonging to the aborted procedure fired later | Stop T3520 whenever the registration procedure ends (failure, reject, accept) |
+| 2 | Verdict VD-RRC-004, VD-RRC-008 | After RRCReject/RRCRelease with waitTime, the UE counted the barred access attempt at T3511 expiry as a failed registration (attempt counter 2) and ignored the "barring alleviated" indication, retrying only at the next T3511/T3521 expiry | UeRrc refused the barred establishment without saying why, so UeNas treated it as a lower-layer failure; `on_barring_alleviated()` was a no-op | RRC reports `AccessBarred`; NAS postpones the registration or de-registration without counting it (TS 24.501 §5.5.1.2.7 b), §5.5.2.2.6) and starts it on barring alleviation |
 
 Issues found in review (not by a test) are fixed in the same commits but kept out of this table:
 

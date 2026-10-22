@@ -347,3 +347,23 @@ TEST(Simulator, TestSystemCanPlayTheUeTowardsTheGnb) {
   EXPECT_TRUE(std::holds_alternative<rrc::RrcSetup>(*setup));
   EXPECT_EQ(sim.gnb().ue_count(), 1u);
 }
+
+// Regression for Verdict VD-RRC-004 (DEFECT_LOG #2): after RRCReject with waitTime the UE retries
+// registration as soon as T302 expires instead of burning attempts while barred.
+TEST(Simulator, RegistrationRetriedWhenRejectWaitTimeEnds) {
+  SimConfig cfg;
+  cfg.gnb.reject_all = true;
+  cfg.gnb.reject_wait_time_s = 16;
+  Simulator sim(cfg);
+  MemoryTrace trace;
+  sim.add_trace_sink(&trace);
+  sim.add_ue();
+  register_all(sim);
+  sim.advance(100);
+  sim.gnb().config().reject_all = false;
+  sim.advance(15'800);  // t = 15.9 s: T3511 expired at 10 s while T302 was still running
+  EXPECT_EQ(sim.ue(0).nas().attempt_counter(), 1u);
+  EXPECT_EQ(trace.uu_messages(), (std::vector<std::string>{"rrcSetupRequest", "rrcReject"}));
+  sim.advance(1'000);   // T302 expires at ~16 s
+  EXPECT_TRUE(registered(sim, 0));
+}

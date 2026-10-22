@@ -77,7 +77,8 @@ class UeRrc {
 
   // ---- NAS -> RRC ----
   /// Starts RRC connection establishment carrying `nas_pdu` in RRCSetupComplete. Returns false
-  /// (without signalling) if already connected/establishing or if access is barred (T302).
+  /// (without signalling) if already connected/establishing or if access is barred (T302); a barred
+  /// attempt is also reported synchronously through establishment_failed(AccessBarred).
   bool establish(EstablishmentCause cause, Bytes nas_pdu, std::optional<std::uint64_t> five_g_s_tmsi);
   /// Sends a NAS PDU in ULInformationTransfer. Returns false if not connected.
   bool send_nas(const Bytes& nas_pdu);

@@ -118,10 +118,16 @@ class UeNas {
   const Timer& t3520() const { return t3520_; }
   const Timer& t3521() const { return t3521_; }
   const Timer& t3346() const { return t3346_; }
+  /// True while a procedure waits for access barring to be alleviated.
+  bool waiting_for_barring_alleviation() const { return pending_after_barring_.has_value(); }
   const std::string& name() const { return name_; }
 
  private:
+  enum class InitialKind : std::uint8_t { Registration, Deregistration };
+
   void start_registration(std::uint8_t type);
+  void on_access_barred();
+  DeregistrationRequestUeOriginating make_deregistration_request(bool switch_off) const;
   void handle_registration_failure(const char* why);
   void set_state(MmState s, MmSubState sub);
   void send_initial(const PlainMessage& m);
@@ -168,6 +174,13 @@ class UeNas {
   };
   std::optional<PendingAuth> pending_auth_;  ///< partial native context from the last 5G-AKA
   Bytes last_initial_message_;               ///< plain initial NAS message (for NAS container)
+
+  // Access barring (TS 24.501 §5.5.1.2.7 b), §5.5.2.2.6): a barred attempt is postponed, not failed.
+  InitialKind initial_kind_ = InitialKind::Registration;
+  bool establish_reported_ = false;
+  std::optional<InitialKind> pending_after_barring_;
+  MmState state_before_registration_ = MmState::Deregistered;
+  MmSubState sub_before_registration_ = MmSubState::NormalService;
 
   Timer t3510_, t3511_, t3502_, t3512_, t3520_, t3521_, t3346_;
   TimeMs t3512_ms_ = 3'600'000;
