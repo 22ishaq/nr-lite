@@ -333,3 +333,17 @@ TEST(Simulator, InterceptorDropsAreRecordedButNotDelivered) {
   EXPECT_TRUE(trace.uu_messages().empty());
   EXPECT_EQ(sim.gnb().ue_count(), 0u);
 }
+
+TEST(Simulator, TestSystemCanPlayTheUeTowardsTheGnb) {
+  Simulator sim;
+  std::vector<AirPdu> downlink;
+  sim.set_downlink_handler([&](const AirPdu& p) { downlink.push_back(p); });
+  sim.inject_ul(0x7001, rrc::Channel::Ccch, rrc::encode_ul_ccch(rrc::RrcSetupRequest{}));
+  sim.advance(10);
+  ASSERT_EQ(downlink.size(), 1u);
+  EXPECT_EQ(downlink[0].rnti, 0x7001);
+  auto setup = rrc::decode_dl_ccch(downlink[0].data);
+  ASSERT_TRUE(setup);
+  EXPECT_TRUE(std::holds_alternative<rrc::RrcSetup>(*setup));
+  EXPECT_EQ(sim.gnb().ue_count(), 1u);
+}

@@ -158,6 +158,10 @@ void Simulator::deliver(const AirPdu& pdu) {
       return;
     }
   }
+  if (downlink_handler_) {
+    downlink_handler_(pdu);
+    return;
+  }
   logger_.warn("AIR", "DL PDU for unknown RNTI ", pdu.rnti, " dropped");
 }
 

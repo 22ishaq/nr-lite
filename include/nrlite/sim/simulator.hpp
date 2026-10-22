@@ -122,6 +122,10 @@ class Simulator {
   void reattach_gnb();
   bool gnb_attached() const { return gnb_attached_; }
 
+  /// Receives downlink PDUs addressed to an RNTI that has no UeNode (a test system playing the
+  /// UE injects uplink with inject_ul() and reads the gNB's answers here).
+  void set_downlink_handler(std::function<void(const AirPdu&)> handler) { downlink_handler_ = std::move(handler); }
+
   /// Sends a downlink PDU over the air (latency, trace and interceptor apply).
   void inject_dl(std::uint16_t rnti, rrc::Channel ch, Bytes data, Bytes rrc_hint = {});
   /// Sends an uplink PDU over the air towards whoever receives uplink.
@@ -144,6 +148,7 @@ class Simulator {
   AirInterceptor interceptor_;
   bool gnb_attached_ = true;
   std::function<void(const AirPdu&)> uplink_handler_;
+  std::function<void(const AirPdu&)> downlink_handler_;
 };
 
 }  // namespace nrlite::sim
