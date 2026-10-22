@@ -370,17 +370,27 @@ TEST_F(UeNasTest, RegistrationRejectPlmnNotAllowedGivesLimitedService) {
   EXPECT_EQ(nas_->attempt_counter(), 0u);
 }
 
-TEST_F(UeNasTest, RegistrationRejectCongestionStartsT3346) {
+TEST_F(UeNasTest, ProtectedRegistrationRejectCongestionUsesSignalledT3346) {
   start_registration();
-  nas_->on_dl_nas(encode(RegistrationReject{Cause::Congestion, GprsTimer{0, 10}, std::nullopt}));  // 20 s
+  authenticate();
+  secure();
+  nas_->on_dl_nas(peer_.protect_dl(RegistrationReject{Cause::Congestion, GprsTimer{0, 10}, std::nullopt}));  // 20 s
   EXPECT_EQ(nas_->sub_state(), MmSubState::AttemptingRegistration);
-  EXPECT_TRUE(nas_->t3346().running());
   EXPECT_EQ(nas_->t3346().remaining(), 20000);
   EXPECT_FALSE(nas_->register_ue());
   nas_->on_rrc_released(rrc::ReleaseCause::RrcRelease);
   loop_.advance(20000);
   EXPECT_EQ(nas_->state(), MmState::RegisteredInitiated);  // retried when T3346 expired
   EXPECT_EQ(established_.size(), 2u);
+}
+
+// Regression for Verdict VD-MM-015 (DEFECT_LOG #3): an unprotected reject must not set T3346.
+TEST_F(UeNasTest, UnprotectedRegistrationRejectCongestionIgnoresSignalledT3346) {
+  start_registration();
+  nas_->on_dl_nas(encode(RegistrationReject{Cause::Congestion, GprsTimer{0, 10}, std::nullopt}));
+  ASSERT_TRUE(nas_->t3346().running());
+  EXPECT_GE(nas_->t3346().remaining(), 15 * 60 * 1000);
+  EXPECT_LE(nas_->t3346().remaining(), 30 * 60 * 1000);
 }
 
 TEST_F(UeNasTest, RegistrationRejectOtherCauseUsesAttemptCounter) {

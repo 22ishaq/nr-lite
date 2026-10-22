@@ -17,6 +17,7 @@
 #include <cstdint>
 #include <functional>
 #include <optional>
+#include <random>
 #include <string>
 
 #include "nrlite/common/event_loop.hpp"
@@ -141,7 +142,7 @@ class UeNas {
   void handle(const AuthenticationReject& m);
   void handle_security_mode_command(const Bytes& pdu, const SecurityModeCommand& m);
   void handle(const RegistrationAccept& m);
-  void handle(const RegistrationReject& m);
+  void handle(const RegistrationReject& m, bool integrity_protected);
   void handle(const DeregistrationAcceptUeOriginating& m);
 
   Suci suci() const;
@@ -155,6 +156,7 @@ class UeNas {
   Callbacks cb_;
   Counters counters_;
   sec::Usim usim_;
+  std::mt19937_64 rng_;  ///< e.g. the random T3346 value of TS 24.008 Table 11.3
 
   MmState state_ = MmState::Null;
   MmSubState sub_state_ = MmSubState::None;

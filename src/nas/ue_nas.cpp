@@ -36,6 +36,7 @@ UeNas::UeNas(EventLoop& loop, const Logger& log, std::string name, UeNasConfig c
       tag_(name_ + "/NAS"),
       config_(std::move(config)),
       usim_(config_.subscription, config_.sqn_ms),
+      rng_(std::hash<std::string>{}(config_.subscription.supi)),
       t3510_(loop, "T3510",
              [this] {
                if (state_ != MmState::RegisteredInitiated) return;
@@ -415,7 +416,7 @@ void UeNas::dispatch(const PlainMessage& m, bool integrity_protected) {
                  [&](const AuthenticationRequest& x) { handle(x); },
                  [&](const AuthenticationReject& x) { handle(x); },
                  [&](const RegistrationAccept& x) { handle(x); },
-                 [&](const RegistrationReject& x) { handle(x); },
+                 [&](const RegistrationReject& x) { handle(x, integrity_protected); },
                  [&](const DeregistrationAcceptUeOriginating& x) { handle(x); },
                  [&](const SecurityModeCommand&) {
                    // Re-keying with an existing context is not supported.
@@ -557,7 +558,7 @@ void UeNas::handle(const RegistrationAccept& m) {
   if (m.guti) send_nas(RegistrationComplete{});
 }
 
-void UeNas::handle(const RegistrationReject& m) {
+void UeNas::handle(const RegistrationReject& m, bool integrity_protected) {
   if (state_ != MmState::RegisteredInitiated) {
     send_status(Cause::MessageTypeNotCompatibleWithProtocolState);
     return;
@@ -588,9 +589,14 @@ void UeNas::handle(const RegistrationReject& m) {
       set_state(MmState::Deregistered, MmSubState::LimitedService);
       break;
     case Cause::Congestion: {
+      // §5.5.1.2.5 #22: the T3346 value IE is only trusted from an integrity protected message;
+      // otherwise T3346 gets a random value from the default range (15-30 min, TS 24.008).
       std::optional<std::uint32_t> secs;
-      if (m.t3346) secs = m.t3346->seconds_timer2();
-      t3346_.start(secs && *secs > 0 ? TimeMs{*secs} * 1000 : TimeMs{15 * 60 * 1000});
+      if (integrity_protected && m.t3346) secs = m.t3346->seconds_timer2();
+      const TimeMs ms = secs && *secs > 0
+                            ? TimeMs{*secs} * 1000
+                            : std::uniform_int_distribution<TimeMs>(15 * 60 * 1000, 30 * 60 * 1000)(rng_);
+      t3346_.start(ms);
       set_state(MmState::Deregistered, MmSubState::AttemptingRegistration);
       break;
     }
