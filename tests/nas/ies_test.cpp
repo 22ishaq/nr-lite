@@ -200,3 +200,10 @@ TEST(NasCause, Names) {
   EXPECT_STREQ(to_string(Cause::NgksiAlreadyInUse), "ngKSI already in use");
   EXPECT_STREQ(to_string(static_cast<Cause>(200)), "unknown cause");
 }
+
+TEST(NasMobileIdentity, ImeiFromImeisvUsesLuhnCheckDigit) {
+  // 49-015420-323751-8 is the commonly used example of a valid IMEI.
+  EXPECT_EQ(imei_from_imeisv("4901542032375107"), "490154203237518");
+  EXPECT_EQ(imei_from_imeisv("3534900698733190").substr(0, 14), "35349006987331");
+  EXPECT_THROW(imei_from_imeisv("1234"), std::invalid_argument);
+}

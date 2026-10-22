@@ -118,6 +118,22 @@ Plmn decode_plmn(const std::uint8_t* p) {
   return out;
 }
 
+std::string imei_from_imeisv(const std::string& imeisv) {
+  if (imeisv.size() < 14) throw std::invalid_argument("IMEISV needs at least 14 digits");
+  const std::string body = imeisv.substr(0, 14);
+  check_digits(body, "IMEISV");
+  int sum = 0;
+  for (std::size_t i = 0; i < body.size(); ++i) {
+    int d = body[body.size() - 1 - i] - '0';
+    if (i % 2 == 0) {  // double every second digit, starting with the rightmost
+      d *= 2;
+      if (d > 9) d -= 9;
+    }
+    sum += d;
+  }
+  return body + static_cast<char>('0' + (10 - sum % 10) % 10);
+}
+
 // ---- Mobile identity ----------------------------------------------------------------------------
 
 IdentityType identity_type(const MobileIdentity& id) {

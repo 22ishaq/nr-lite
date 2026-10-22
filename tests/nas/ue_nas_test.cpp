@@ -522,6 +522,16 @@ TEST_F(UeNasTest, ProtectedIdentityRequestForImeisvAnswered) {
   EXPECT_EQ(std::get<Imeisv>(last_ul_as<IdentityResponse>().mobile_identity).digits, config_.imeisv);
 }
 
+// Regression for Verdict VD-MM-011 (DEFECT_LOG #4): the UE answered an IMEI request with "no identity".
+TEST_F(UeNasTest, ProtectedIdentityRequestForImeiAnswered) {
+  register_fully();
+  nas_->on_dl_nas(peer_.protect_dl(IdentityRequest{IdentityType::Imei}));
+  EXPECT_EQ(std::get<Imei>(last_ul_as<IdentityResponse>().mobile_identity).digits,
+            imei_from_imeisv(config_.imeisv));
+  nas_->on_dl_nas(peer_.protect_dl(IdentityRequest{IdentityType::STmsi}));
+  EXPECT_EQ(std::get<STmsi5g>(last_ul_as<IdentityResponse>().mobile_identity).tmsi, nas_->guti()->tmsi);
+}
+
 TEST_F(UeNasTest, UnknownMessageTypeGetsStatus97) {
   start_registration();
   nas_->on_dl_nas(Bytes{0x7e, 0x00, 0x99});

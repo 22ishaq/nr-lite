@@ -134,6 +134,10 @@ struct Imeisv {
   bool operator==(const Imeisv& o) const { return digits == o.digits; }
 };
 
+/// IMEI (TAC + SNR + check digit) for the device whose IMEISV (TAC + SNR + SVN) is given.
+/// The check digit is the Luhn digit over the first 14 digits (TS 23.003 Annex B).
+std::string imei_from_imeisv(const std::string& imeisv);
+
 struct NoIdentity {
   bool operator==(const NoIdentity&) const { return true; }
 };

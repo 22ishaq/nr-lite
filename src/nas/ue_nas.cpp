@@ -440,6 +440,11 @@ void UeNas::handle(const IdentityRequest& m, bool) {
       r.mobile_identity = guti_ ? MobileIdentity{*guti_} : MobileIdentity{NoIdentity{}};
       break;
     case IdentityType::Imeisv: r.mobile_identity = Imeisv{config_.imeisv}; break;
+    case IdentityType::Imei: r.mobile_identity = Imei{imei_from_imeisv(config_.imeisv)}; break;
+    case IdentityType::STmsi:
+      r.mobile_identity = guti_ ? MobileIdentity{STmsi5g{guti_->amf_set_id, guti_->amf_pointer, guti_->tmsi}}
+                                : MobileIdentity{NoIdentity{}};
+      break;
     default: r.mobile_identity = NoIdentity{}; break;
   }
   send_nas(r);
